@@ -17,6 +17,17 @@ module.exports = {
       gasPrice: 1000000000,
       skipDryRun: true,
     },
+  sepolia: {
+    provider: () =>
+      new HDWalletProvider({
+        privateKeys: [privateKey],
+        providerOrUrl: `https://sepolia.infura.io/v3/${infuraApiKey}`
+      }),
+    network_id: 11155111,
+    gas: 8000000,
+    gasPrice: 1000000000,
+    skipDryRun: true,
+  },
   },
   mocha: {},
   compilers: {

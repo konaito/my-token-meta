@@ -4,7 +4,8 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 const myTokenArtifact = require('../build/contracts/MyToken.json'); // ABIを読み込む
 
 const privateKey = process.env.PRIVATE_KEY;
-const infuraUrl = `https://optimism-sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`;
+// const infuraUrl = `https://optimism-sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`;
+const infuraUrl = `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`;
 
 const provider = new HDWalletProvider(privateKey, infuraUrl);
 const web3 = new Web3(provider);
@@ -18,7 +19,7 @@ async function sendToken() {
     const accounts = await web3.eth.getAccounts();
     const sender = accounts[0];
     const recipient = '0xC8fa881b898FA1177c0E7e615AabE61dbBc84508'; // 送金先アドレス
-    const amount = web3.utils.toWei('10', 'ether'); // 送金額（Ether単位）
+    const amount = web3.utils.toWei('100', 'ether'); // 送金額（Ether単位）
 
     console.log(`Sending ${amount} tokens from ${sender} to ${recipient}...`);
 
@@ -35,7 +36,7 @@ async function sendToken() {
             gas,
             gasPrice,
             nonce,
-            chainId: 11155420 // Optimism SepoliaのChain ID
+            chainId: 11155111
         },
         privateKey
     );

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>メタトランザクションデモ</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+</head>
+<body>
+    <button id="sendTransaction">トランザクションを送信</button>
+
+    <script>
+        // ウェブ3インスタンスの初期化
+        const web3 = new Web3(Web3.givenProvider || 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID');
+
+        // コントラクトのABIとアドレス
+        const ERC20MetaTransactionWrapperABI = [
+            // コントラクトのABIをここに挿入
+        ];
+        const contractAddress = '0x38cE20140EEd00a472f52723a5f6C198eA0ae699';
+
+        // コントラクトインスタンスの作成
+        const contract = new web3.eth.Contract(ERC20MetaTransactionWrapperABI, contractAddress);
+
+        document.getElementById('sendTransaction').addEventListener('click', async function() {
+            try {
+                // トランザクションの詳細
+                const from = '0x...'; // トークンを送信するアドレス
+                const to = '0x...'; // トークンを受け取るアドレス
+                const amount = web3.utils.toWei('1', 'ether'); // 転送するトークンの量
+                const signature = '0x...'; // 事前に生成した署名
+
+                // アクティブなアカウントの取得
+                const accounts = await web3.eth.requestAccounts();
+                const senderAccount = accounts[0]; // トランザクションを送信するアカウント
+
+                // メタトランザクションの送信
+                const receipt = await contract.methods.transferWithMeta(from, to, amount, signature).send({
+                    from: senderAccount,
+                });
+
+                console.log('Transaction receipt: ', receipt);
+            } catch (error) {
+                console.error('Error sending transaction: ', error);
+            }
+        });
+    </script>
+</body>
+</html>
